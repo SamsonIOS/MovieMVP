@@ -16,6 +16,12 @@ final class ActorCollectionViewCell: UICollectionViewCell {
         static let actorPhotoImageViewCornerRadius: CGFloat = 5
         static let actorPhotoImageViewBorderWidth: CGFloat = 1
         static let actorNameLabelSystemFont: CGFloat = 13
+        static let actorNameLabelTopAnchor: CGFloat = 2
+        static let actorNameLabelBottomAnchor: CGFloat = 2
+        static let actorPhotoImageViewBottomAnchor: CGFloat = -5
+        static let actorPhotoImageViewLeadingAnchor: CGFloat = 4
+        static let actorPhotoImageViewTrailingAnchor: CGFloat = -4
+        static let actorPhotoImageViewHeightAnchor: CGFloat = 200
     }
 
     // MARK: Private Visual Components
@@ -73,13 +79,13 @@ final class ActorCollectionViewCell: UICollectionViewCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             actorNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            actorNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-            actorNameLabel.bottomAnchor.constraint(equalTo: actorPhotoImageView.topAnchor, constant: 2),
+            actorNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: Constants.actorNameLabelTopAnchor),
+            actorNameLabel.bottomAnchor.constraint(equalTo: actorPhotoImageView.topAnchor, constant: Constants.actorNameLabelBottomAnchor),
 
-            actorPhotoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            actorPhotoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            actorPhotoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
-            actorPhotoImageView.heightAnchor.constraint(equalToConstant: 200),
+            actorPhotoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.actorPhotoImageViewBottomAnchor),
+            actorPhotoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.actorPhotoImageViewLeadingAnchor),
+            actorPhotoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.actorPhotoImageViewTrailingAnchor),
+            actorPhotoImageView.heightAnchor.constraint(equalToConstant: Constants.actorPhotoImageViewHeightAnchor),
         ])
     }
 

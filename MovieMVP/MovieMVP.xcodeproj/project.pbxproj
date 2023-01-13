@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33100A2F297164A6004A6B32 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */; };
 		332670BD2906C87C00EE3472 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332670BC2906C87C00EE3472 /* AppDelegate.swift */; };
 		332670BF2906C87C00EE3472 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332670BE2906C87C00EE3472 /* SceneDelegate.swift */; };
 		332670C42906C87C00EE3472 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 332670C22906C87C00EE3472 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		332670B92906C87C00EE3472 /* MovieMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		332670BC2906C87C00EE3472 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		332670BE2906C87C00EE3472 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			children = (
 				332670BC2906C87C00EE3472 /* AppDelegate.swift */,
 				332670BE2906C87C00EE3472 /* SceneDelegate.swift */,
+				33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */,
 				33A0AE9A2970BD23001BEB32 /* Builder */,
 				33A0AE992970BD0E001BEB32 /* ServiceLayer */,
 				33A0AE712970B8A1001BEB32 /* Router */,
@@ -356,6 +359,7 @@
 				33A0AE772970B8C4001BEB32 /* Routerable.swift in Sources */,
 				33A0AE6E2970B80D001BEB32 /* ModuleBuilder.swift in Sources */,
 				33F12B642970AA7000201D2C /* ActorCollectionViewCell.swift in Sources */,
+				33100A2F297164A6004A6B32 /* UIViewController + Extension.swift in Sources */,
 				33A0AE922970BC43001BEB32 /* Actor.swift in Sources */,
 				33A73F71290720F00089B6F2 /* MovieTableViewCell.swift in Sources */,
 				33A0AE9C2970BD43001BEB32 /* NetworkService.swift in Sources */,

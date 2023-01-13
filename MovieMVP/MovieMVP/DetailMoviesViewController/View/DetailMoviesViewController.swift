@@ -24,6 +24,17 @@ final class DetailMoviesViewController: UIViewController {
         static let dateLabelSystemFont: CGFloat = 18
         static let overviewLabelSystemFont: CGFloat = 15
         static let overviewLabelMaximumNumberOfLines = 0
+        static let movieImageViewTopAnchor: CGFloat = 100
+        static let movieImageViewHeightAnchor: CGFloat = 250
+        static let dateLabelTopAnchor: CGFloat = 20
+        static let overviewLabelTopAnchor: CGFloat = 30
+        static let overviewLabelLeadingAnchor: CGFloat = 10
+        static let overviewLabelTrailingAnchor: CGFloat = -10
+        static let overviewLabelHeightAnchor: CGFloat = 160
+        static let collectionViewTopAnchor: CGFloat = 5
+        static let collectionViewLeadingAnchor: CGFloat = 10
+        static let collectionViewTrailingAnchor: CGFloat = -10
+        static let collectionViewBottomAnchor: CGFloat = -10
     }
 
     // MARK: - Private Visual Components
@@ -82,9 +93,9 @@ final class DetailMoviesViewController: UIViewController {
     }()
 
     // MARK: - Public properties
-    
+
     var presenter: DetailMoviesable?
-    
+
     // MARK: - Private properties
 
     private var actor: [Actor] = []
@@ -130,24 +141,48 @@ final class DetailMoviesViewController: UIViewController {
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            movieImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            movieImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.movieImageViewTopAnchor),
             movieImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             movieImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            movieImageView.heightAnchor.constraint(equalToConstant: 250),
+            movieImageView.heightAnchor.constraint(equalToConstant: Constants.movieImageViewHeightAnchor),
 
-            dateLabel.topAnchor.constraint(equalTo: movieImageView.bottomAnchor, constant: 20),
+            dateLabel.topAnchor.constraint(
+                equalTo: movieImageView.bottomAnchor,
+                constant: Constants.dateLabelTopAnchor
+            ),
             dateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             overviewLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            overviewLabel.topAnchor.constraint(equalTo: dateLabel.topAnchor, constant: 30),
-            overviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            overviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            overviewLabel.heightAnchor.constraint(equalToConstant: 160),
+            overviewLabel.topAnchor.constraint(
+                equalTo: dateLabel.topAnchor,
+                constant: Constants.overviewLabelTopAnchor
+            ),
+            overviewLabel.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Constants.overviewLabelLeadingAnchor
+            ),
+            overviewLabel.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: Constants.overviewLabelTrailingAnchor
+            ),
+            overviewLabel.heightAnchor.constraint(equalToConstant: Constants.overviewLabelHeightAnchor),
 
-            collectionView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 5),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            collectionView.topAnchor.constraint(
+                equalTo: overviewLabel.bottomAnchor,
+                constant: Constants.collectionViewTopAnchor
+            ),
+            collectionView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: Constants.collectionViewLeadingAnchor
+            ),
+            collectionView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: Constants.collectionViewTrailingAnchor
+            ),
+            collectionView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: Constants.collectionViewBottomAnchor
+            )
         ])
     }
 
@@ -162,7 +197,7 @@ final class DetailMoviesViewController: UIViewController {
     private func getImageData(url: URL) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
-                print("\(Constants.dataTaskErrorText) \(error.localizedDescription)")
+                self.showAlert(title: Constants.dataTaskErrorText, message: error.localizedDescription, handler: nil)
                 return
             }
 
@@ -218,7 +253,7 @@ extension DetailMoviesViewController: DetailMoviesViewable {
     }
 
     func failure(_ error: Error) {
-        print(error.localizedDescription)
+        showAlert(title: nil, message: error.localizedDescription, handler: nil)
     }
 
     func setupUI(movieDetail: Movies?, imageURL: String) {

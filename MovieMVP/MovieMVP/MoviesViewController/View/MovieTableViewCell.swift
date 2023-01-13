@@ -16,6 +16,22 @@ final class MovieTableViewCell: UITableViewCell {
         static let infoFilmLabelSystemFont: CGFloat = 13
         static let ratingViewCornerRadius: CGFloat = 12
         static let ratingLabelSystemFont: CGFloat = 12
+        static let filmImageViewLeadingAnchor: CGFloat = 10
+        static let filmImageViewTopAnchor: CGFloat = 10
+        static let filmImageViewBottomAnchor: CGFloat = -10
+        static let filmImageViewHeightAnchor: CGFloat = 210
+        static let filmImageViewWidthAnchor: CGFloat = 160
+        static let nameFilmLabelTopAnchor: CGFloat = 3
+        static let nameFilmLabelLeadingAnchor: CGFloat = 10
+        static let nameFilmLabelWidthAnchor: CGFloat = 210
+        static let nameFilmLabelHeigthAnchor: CGFloat = 60
+        static let infoFilmLabelTopAnchor: CGFloat = 5
+        static let infoFilmLabelLeadingAnchor: CGFloat = 10
+        static let infoFilmLabelWidthAnchor: CGFloat = 170
+        static let infoFilmLabelHeigthAnchor: CGFloat = 150
+        static let ratingViewTopAnchor: CGFloat = 0
+        static let ratingViewWidthAnchor: CGFloat = 24
+        static let ratingViewHeigthAnchor: CGFloat = 24
     }
 
     // MARK: Private Visual Components
@@ -101,26 +117,38 @@ final class MovieTableViewCell: UITableViewCell {
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            filmImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            filmImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            filmImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            filmImageView.heightAnchor.constraint(equalToConstant: 210),
-            filmImageView.widthAnchor.constraint(equalToConstant: 160),
+            filmImageView.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: Constants.filmImageViewLeadingAnchor
+            ),
+            filmImageView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.filmImageViewTopAnchor),
+            filmImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.filmImageViewBottomAnchor),
+            filmImageView.heightAnchor.constraint(equalToConstant: Constants.filmImageViewHeightAnchor),
+            filmImageView.widthAnchor.constraint(equalToConstant: Constants.filmImageViewWidthAnchor),
 
-            nameFilmLabel.topAnchor.constraint(equalTo: topAnchor, constant: 3),
-            nameFilmLabel.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 10),
-            nameFilmLabel.widthAnchor.constraint(equalToConstant: 210),
-            nameFilmLabel.heightAnchor.constraint(equalToConstant: 60),
+            nameFilmLabel.topAnchor.constraint(equalTo: topAnchor, constant: Constants.nameFilmLabelTopAnchor),
+            nameFilmLabel.leadingAnchor.constraint(
+                equalTo: filmImageView.trailingAnchor,
+                constant: Constants.nameFilmLabelLeadingAnchor
+            ),
+            nameFilmLabel.widthAnchor.constraint(equalToConstant: Constants.nameFilmLabelWidthAnchor),
+            nameFilmLabel.heightAnchor.constraint(equalToConstant: Constants.nameFilmLabelHeigthAnchor),
 
-            infoFilmLabel.topAnchor.constraint(equalTo: nameFilmLabel.bottomAnchor, constant: 5),
-            infoFilmLabel.leadingAnchor.constraint(equalTo: filmImageView.trailingAnchor, constant: 10),
-            infoFilmLabel.widthAnchor.constraint(equalToConstant: 170),
-            infoFilmLabel.heightAnchor.constraint(equalToConstant: 150),
+            infoFilmLabel.topAnchor.constraint(
+                equalTo: nameFilmLabel.bottomAnchor,
+                constant: Constants.infoFilmLabelTopAnchor
+            ),
+            infoFilmLabel.leadingAnchor.constraint(
+                equalTo: filmImageView.trailingAnchor,
+                constant: Constants.infoFilmLabelLeadingAnchor
+            ),
+            infoFilmLabel.widthAnchor.constraint(equalToConstant: Constants.infoFilmLabelWidthAnchor),
+            infoFilmLabel.heightAnchor.constraint(equalToConstant: Constants.infoFilmLabelHeigthAnchor),
 
             ratingView.leadingAnchor.constraint(equalTo: filmImageView.leadingAnchor),
-            ratingView.topAnchor.constraint(equalTo: filmImageView.topAnchor, constant: 0),
-            ratingView.widthAnchor.constraint(equalToConstant: 24),
-            ratingView.heightAnchor.constraint(equalToConstant: 24),
+            ratingView.topAnchor.constraint(equalTo: filmImageView.topAnchor, constant: Constants.ratingViewTopAnchor),
+            ratingView.widthAnchor.constraint(equalToConstant: Constants.ratingViewWidthAnchor),
+            ratingView.heightAnchor.constraint(equalToConstant: Constants.ratingViewHeigthAnchor),
 
             ratingLabel.centerXAnchor.constraint(equalTo: ratingView.centerXAnchor),
             ratingLabel.centerYAnchor.constraint(equalTo: ratingView.centerYAnchor)
