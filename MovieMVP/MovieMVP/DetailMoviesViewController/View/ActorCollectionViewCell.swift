@@ -13,26 +13,35 @@ final class ActorCollectionViewCell: UICollectionViewCell {
         static let responseText = "Response"
         static let dontGetDataText = "Данные не получены"
         static let initErrorText = "init(coder:) has not been implemented"
+        static let actorPhotoImageViewCornerRadius: CGFloat = 5
+        static let actorPhotoImageViewBorderWidth: CGFloat = 1
+        static let actorNameLabelSystemFont: CGFloat = 13
+        static let actorNameLabelTopAnchor: CGFloat = 2
+        static let actorNameLabelBottomAnchor: CGFloat = 2
+        static let actorPhotoImageViewBottomAnchor: CGFloat = -5
+        static let actorPhotoImageViewLeadingAnchor: CGFloat = 4
+        static let actorPhotoImageViewTrailingAnchor: CGFloat = -4
+        static let actorPhotoImageViewHeightAnchor: CGFloat = 200
     }
 
     // MARK: Private Visual Components
 
-    let actorPhotoImageView: UIImageView = {
+    private let actorPhotoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
-        imageView.layer.cornerRadius = 5
+        imageView.layer.cornerRadius = Constants.actorPhotoImageViewCornerRadius
         imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = Constants.actorPhotoImageViewBorderWidth
         imageView.layer.borderColor = UIColor.orange.cgColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    let actorNameLabel: UILabel = {
+    private let actorNameLabel: UILabel = {
         let name = UILabel()
         name.textColor = .white
         name.translatesAutoresizingMaskIntoConstraints = false
-        name.font = .systemFont(ofSize: 13, weight: .semibold)
+        name.font = .systemFont(ofSize: Constants.actorNameLabelSystemFont, weight: .semibold)
         return name
     }()
 
@@ -55,7 +64,7 @@ final class ActorCollectionViewCell: UICollectionViewCell {
 
     // MARK: Public Methods
 
-    func setCellWithValues(_ actor: ActorInfo) {
+    func setCellWithValues(actor: Actor) {
         setUI(actorImage: actor.actorImage, actorName: actor.name)
     }
 
@@ -70,13 +79,13 @@ final class ActorCollectionViewCell: UICollectionViewCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             actorNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            actorNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
-            actorNameLabel.bottomAnchor.constraint(equalTo: actorPhotoImageView.topAnchor, constant: 2),
+            actorNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: Constants.actorNameLabelTopAnchor),
+            actorNameLabel.bottomAnchor.constraint(equalTo: actorPhotoImageView.topAnchor, constant: Constants.actorNameLabelBottomAnchor),
 
-            actorPhotoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
-            actorPhotoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4),
-            actorPhotoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
-            actorPhotoImageView.heightAnchor.constraint(equalToConstant: 200),
+            actorPhotoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.actorPhotoImageViewBottomAnchor),
+            actorPhotoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.actorPhotoImageViewLeadingAnchor),
+            actorPhotoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.actorPhotoImageViewTrailingAnchor),
+            actorPhotoImageView.heightAnchor.constraint(equalToConstant: Constants.actorPhotoImageViewHeightAnchor),
         ])
     }
 
@@ -84,18 +93,16 @@ final class ActorCollectionViewCell: UICollectionViewCell {
         actorNameLabel.text = actorName
         guard let imageString = actorImage else { return }
 
-        let urlString = Constants.urlImage + imageString
+        let urlString = "\(NetworkAPI.imageURL)\(imageString)"
 
         guard let imageURL = URL(string: urlString) else { return }
-
-        actorPhotoImageView.image = nil
         getImageData(url: imageURL)
     }
 
     private func getImageData(url: URL) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
-                print("\(Constants.dataTaskErrorText) \(error.localizedDescription)")
+                print("\(Constants.dataTaskErrorText) - \(error.localizedDescription)")
                 return
             }
 
