@@ -10,14 +10,20 @@ final class MovieTableViewCell: UITableViewCell {
     private enum Constants {
         static let urlImage = "https://image.tmdb.org/t/p/w500"
         static let initErrorText = "init(coder:) has not been implemented"
+        static let filmImageViewCornerRadius: CGFloat = 15
+        static let nameFilmLabelSystemFont: CGFloat = 16
+        static let nameFilmLabelNumberOfLines = 0
+        static let infoFilmLabelSystemFont: CGFloat = 13
+        static let ratingViewCornerRadius: CGFloat = 12
+        static let ratingLabelSystemFont: CGFloat = 12
     }
 
-    // MARK: Public Properties
+    // MARK: Private Visual Components
 
     private let filmImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 15
+        imageView.layer.cornerRadius = Constants.filmImageViewCornerRadius
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -26,15 +32,15 @@ final class MovieTableViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .white
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.font = .systemFont(ofSize: Constants.nameFilmLabelSystemFont, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
+        label.numberOfLines = Constants.nameFilmLabelNumberOfLines
         return label
     }()
 
     private let infoFilmLabel: UITextView = {
         let label = UITextView()
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = .systemFont(ofSize: Constants.infoFilmLabelSystemFont, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.backgroundColor = .black
@@ -45,7 +51,7 @@ final class MovieTableViewCell: UITableViewCell {
         let view = UIView()
         view.backgroundColor = .purple
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 12
+        view.layer.cornerRadius = Constants.ratingViewCornerRadius
         view.clipsToBounds = true
         return view
     }()
@@ -53,7 +59,7 @@ final class MovieTableViewCell: UITableViewCell {
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 12, weight: .bold)
+        label.font = .systemFont(ofSize: Constants.ratingLabelSystemFont, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -82,7 +88,7 @@ final class MovieTableViewCell: UITableViewCell {
         ratingLabel.text = String(rating)
 
         guard let imageString = movie.movieImage else { return }
-        let urlString = Constants.urlImage + imageString
+        let urlString = "\(NetworkAPI.imageURL)\(imageString)"
 
         guard let imageURL = URL(string: urlString) else {
             return
@@ -91,7 +97,7 @@ final class MovieTableViewCell: UITableViewCell {
         getImageData(url: imageURL)
     }
 
-    // MARK: Private Method
+    // MARK: Private Methods
 
     private func setConstraints() {
         NSLayoutConstraint.activate([

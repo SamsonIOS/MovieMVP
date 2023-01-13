@@ -1,29 +1,44 @@
-// SecondViewController.swift
+// DetailMoviesViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Экран с подробной информацией о фильме
-final class SecondViewController: UIViewController {
-    // MARK: Constants
+final class DetailMoviesViewController: UIViewController {
+    // MARK: - Constants
 
     private enum Constants {
-        static let imageUrl = "https://image.tmdb.org/t/p/w500"
         static let collectionCellId = "CollectionCell"
         static let responseText = "Response"
         static let dontGetDataText = "Данные не получены"
         static let buttonTitle = "К Списку"
         static let dataTaskErrorText = "DataTask error:"
+        static let itemSizeWidth = 170
+        static let itemSizeHeight = 230
+        static let minimumLineSpacing: CGFloat = 18
+        static let sectionInsetTop: CGFloat = 10
+        static let sectionInsetLeft: CGFloat = 5
+        static let sectionInsetBottom: CGFloat = 10
+        static let sectionInsetRight: CGFloat = 5
+        static let movieImageViewBorderWidth: CGFloat = 1
+        static let dateLabelSystemFont: CGFloat = 18
+        static let overviewLabelSystemFont: CGFloat = 15
+        static let overviewLabelMaximumNumberOfLines = 0
     }
 
-    // MARK: Private properties
+    // MARK: - Private Visual Components
 
     private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 170, height: 230)
-        layout.minimumLineSpacing = 18
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
+        layout.itemSize = CGSize(width: Constants.itemSizeWidth, height: Constants.itemSizeHeight)
+        layout.minimumLineSpacing = Constants.minimumLineSpacing
+        layout.sectionInset = UIEdgeInsets(
+            top: Constants.sectionInsetTop,
+            left: Constants.sectionInsetLeft,
+            bottom: Constants.sectionInsetBottom,
+            right: Constants.sectionInsetRight
+        )
         return layout
     }()
 
@@ -40,14 +55,14 @@ final class SecondViewController: UIViewController {
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = Constants.movieImageViewBorderWidth
         imageView.layer.borderColor = UIColor.orange.cgColor
         return imageView
     }()
 
     private let dateLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: Constants.dateLabelSystemFont, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
@@ -55,42 +70,47 @@ final class SecondViewController: UIViewController {
 
     private let overviewLabel: UITextView = {
         let label = UITextView()
-        label.font = .monospacedDigitSystemFont(ofSize: 15, weight: .semibold)
+        label.font = .monospacedDigitSystemFont(ofSize: Constants.overviewLabelSystemFont, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.backgroundColor = .black
-        label.textContainer.maximumNumberOfLines = 0
+        label.textContainer.maximumNumberOfLines = Constants.overviewLabelMaximumNumberOfLines
         label.isEditable = false
         label.isSelectable = false
         label.textContainer.lineBreakMode = .byCharWrapping
         return label
     }()
 
-    private var actor = Actors()
+    // MARK: - Public properties
+    
+    var presenter: DetailMoviesable?
+    
+    // MARK: - Private properties
 
-    var movieId: Int?
+    private var actor: [Actor] = []
+    private var movieId: Int?
 
-    // MARK: Life cycle
+    // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
     }
 
-    // MARK: Public Methods
+    // MARK: - Public Methods
 
-    func setUI(movie: Movies, imageUrl: String) {
-        dateLabel.text = movie.date
-        overviewLabel.text = movie.overview
-        movieId = movie.id
-        title = movie.title
-        let urlString = "\(Constants.imageUrl)\(imageUrl)"
+    func setUI(movie: Movies?, imageURL: String) {
+        dateLabel.text = movie?.date
+        overviewLabel.text = movie?.overview
+        movieId = movie?.id
+        title = movie?.title
+        let urlString = "\(NetworkAPI.imageURL)\(imageURL)"
         guard let imageURL = URL(string: urlString) else { return }
         movieImageView.image = nil
         getImageData(url: imageURL)
     }
 
-    // MARK: Private Methods
+    // MARK: - Private Methods
 
     private func setView() {
         view.backgroundColor = .black
@@ -104,7 +124,8 @@ final class SecondViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = Constants.buttonTitle
         collectionView.backgroundColor = .black
         setConstraints()
-        loadPopularMovie()
+        fetchDetailMovies()
+        fetchActor()
     }
 
     private func setConstraints() {
@@ -121,21 +142,21 @@ final class SecondViewController: UIViewController {
             overviewLabel.topAnchor.constraint(equalTo: dateLabel.topAnchor, constant: 30),
             overviewLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             overviewLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            overviewLabel.heightAnchor.constraint(equalToConstant: 190),
+            overviewLabel.heightAnchor.constraint(equalToConstant: 160),
 
-            collectionView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 7),
+            collectionView.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 5),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
         ])
     }
 
-    private func loadPopularMovie() {
-        actor.fetchActorData(idMovie: movieId) { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
+    private func fetchDetailMovies() {
+        presenter?.fetchDetailMovies()
+    }
+
+    private func fetchActor() {
+        presenter?.fetchActor()
     }
 
     private func getImageData(url: URL) {
@@ -164,11 +185,11 @@ final class SecondViewController: UIViewController {
     }
 }
 
-// MARK: UICollectionViewDataSource, UICollectionViewDelegate
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate
 
-extension SecondViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension DetailMoviesViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        actor.numberOfRowsInSection(section: section)
+        presenter?.actors.count ?? 0
     }
 
     func collectionView(
@@ -181,10 +202,26 @@ extension SecondViewController: UICollectionViewDataSource, UICollectionViewDele
                 for: indexPath
             ) as? ActorCollectionViewCell
         else { return UICollectionViewCell() }
-        let actor = actor.cellForRowAt(indexPath: indexPath)
-        cell.setCellWithValues(actor)
+        guard let actor = presenter?.actors[indexPath.row] else { return UICollectionViewCell() }
+        cell.setCellWithValues(actor: actor)
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
         return cell
+    }
+}
+
+// MARK: - DetailMoviesViewable
+
+extension DetailMoviesViewController: DetailMoviesViewable {
+    func succes() {
+        collectionView.reloadData()
+    }
+
+    func failure(_ error: Error) {
+        print(error.localizedDescription)
+    }
+
+    func setupUI(movieDetail: Movies?, imageURL: String) {
+        setUI(movie: movieDetail, imageURL: imageURL)
     }
 }

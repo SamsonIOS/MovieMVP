@@ -1,20 +1,11 @@
-// FirstViewController.swift
+// MoviesViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Экран со списком фильмов
-final class FirstViewController: UIViewController {
+final class MoviesViewController: UIViewController {
     // MARK: Constants
-
-    private enum Url {
-        static let polularMovie =
-            "https://api.themoviedb.org/3/movie/popular?api_key=74b256bd9644791fa138aeb51482b3b8&language=en-US&page=1"
-        static let topRatedMovie =
-            "https://api.themoviedb.org/3/movie/top_rated?api_key=74b256bd9644791fa138aeb51482b3b8&language=en-US&page=1"
-        static let upComingMovie =
-            "https://api.themoviedb.org/3/movie/upcoming?api_key=74b256bd9644791fa138aeb51482b3b8&language=en-US&page=1"
-    }
 
     private enum ButtonsTitle {
         static let popular = "Популярные"
@@ -28,20 +19,30 @@ final class FirstViewController: UIViewController {
         static let movieCellId = "movieCell"
     }
 
-    // MARK: Private properties
+    private enum ValueComponents {
+        static let buttonSystemFont: CGFloat = 10
+        static let cornerRadius: CGFloat = 6
+        static let popularButtonTag = 0
+        static let topRatingButtonTag = 1
+        static let latestButtonTag = 2
+    }
 
-    private var movieView = NetworkLayer()
+    // MARK: - Public properties
+
+    var presenter: MoviesPresentable?
+
+    // MARK: Private Visual Components
 
     private lazy var popularButton: UIButton = {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .purple
         button.setTitle(ButtonsTitle.popular, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
-        button.layer.cornerRadius = 6
+        button.titleLabel?.font = .systemFont(ofSize: ValueComponents.buttonSystemFont, weight: .bold)
+        button.layer.cornerRadius = ValueComponents.cornerRadius
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
-        button.tag = 0
+        button.tag = ValueComponents.popularButtonTag
         return button
     }()
 
@@ -50,11 +51,11 @@ final class FirstViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .purple
         button.setTitle(ButtonsTitle.topRating, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
-        button.layer.cornerRadius = 6
+        button.titleLabel?.font = .systemFont(ofSize: ValueComponents.buttonSystemFont, weight: .bold)
+        button.layer.cornerRadius = ValueComponents.cornerRadius
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
-        button.tag = 1
+        button.tag = ValueComponents.topRatingButtonTag
         return button
     }()
 
@@ -63,11 +64,11 @@ final class FirstViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .purple
         button.setTitle(ButtonsTitle.upComing, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 10, weight: .bold)
-        button.layer.cornerRadius = 6
+        button.titleLabel?.font = .systemFont(ofSize: ValueComponents.buttonSystemFont, weight: .bold)
+        button.layer.cornerRadius = ValueComponents.cornerRadius
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
-        button.tag = 2
+        button.tag = ValueComponents.latestButtonTag
         return button
     }()
 
@@ -97,11 +98,11 @@ final class FirstViewController: UIViewController {
     @objc private func clickAction(sender: UIButton) {
         switch sender.tag {
         case 0:
-            switchMovies(urlMovies: Url.polularMovie)
+            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.topRated)")
         case 1:
-            switchMovies(urlMovies: Url.topRatedMovie)
+            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.popular)")
         case 2:
-            switchMovies(urlMovies: Url.upComingMovie)
+            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.upcoming)")
         default:
             break
         }
@@ -111,8 +112,6 @@ final class FirstViewController: UIViewController {
 
     private func switchMovies(urlMovies: String) {
         let url = urlMovies
-        movieView.filmUrl = url
-        loadPopularMoviesData()
     }
 
     private func setView() {
@@ -128,7 +127,7 @@ final class FirstViewController: UIViewController {
         tableView.backgroundColor = .black
         constraintsTableView()
         setButtons()
-        loadPopularMoviesData()
+        loadPopularMoviesData(requestType: .popular)
     }
 
     private func constraintsTableView() {
@@ -155,20 +154,20 @@ final class FirstViewController: UIViewController {
         latestButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
-    private func loadPopularMoviesData() {
-        movieView.fetchPopularMoviesData { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+    private func loadPopularMoviesData(requestType: RequestType) {
+        presenter?.fetchMovies(requestType: requestType)
+    }
+
+    private func goToDetailMoviesViewController(id: Int) {
+        presenter?.selectMovie(id: id)
     }
 }
 
-// MARK: UITableViewDelegate, UITableViewDataSource
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension FirstViewController: UITableViewDelegate, UITableViewDataSource {
+extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movieView.numberOfRowsInSection(section: section)
+        presenter?.movies.count ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -177,22 +176,26 @@ extension FirstViewController: UITableViewDelegate, UITableViewDataSource {
             for: indexPath
         ) as? MovieTableViewCell else { return UITableViewCell() }
 
-        let movie = movieView.cellForRowAt(indexPath: indexPath)
+        guard let movie = presenter?.cellForRowAt(indexPath: indexPath) else { return UITableViewCell() }
         cell.setCellWithValues(movie)
         cell.selectionStyle = .none
 
         return cell
     }
 
-    private func goToSecondVC(indexPath: IndexPath) {
-        let secondVC = SecondViewController()
-        let movie = movieView.cellForRowAt(indexPath: indexPath)
-        guard let secondMovieImage = movie.backdropImage else { return }
-        secondVC.setUI(movie: movie, imageUrl: secondMovieImage)
-        navigationController?.pushViewController(secondVC, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goToDetailMoviesViewController(id: presenter?.movies[indexPath.row].id ?? 0)
+    }
+}
+
+// MARK: - MoviesViewProtocol
+
+extension MoviesViewController: MoviesViewProtocol {
+    func failure(_ error: Error) {
+        print(error.localizedDescription)
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        goToSecondVC(indexPath: indexPath)
+    func succes() {
+        tableView.reloadData()
     }
 }
