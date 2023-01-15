@@ -68,11 +68,4 @@ class NetworkCoreService {
             }
         }
     }
-
-    func fetchImageData(_ url: String, _ completion: @escaping (Result<Data, Error>) -> Void) {
-        AF.request(url).response { response in
-            guard let data = response.data else { return }
-            completion(.success(data))
-        }
-    }
 }

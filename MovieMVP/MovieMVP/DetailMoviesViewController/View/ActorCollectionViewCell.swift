@@ -8,7 +8,6 @@ final class ActorCollectionViewCell: UICollectionViewCell {
     // MARK: Constants
 
     private enum Constants {
-        static let urlImage = "https://image.tmdb.org/t/p/w500"
         static let dataTaskErrorText = "DataTask error: "
         static let responseText = "Response"
         static let dontGetDataText = "Данные не получены"

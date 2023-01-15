@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// протокол для реалма
+/// Протокол для реалма
 protocol RealmServicable {
     func save<T: Object>(items: [T], update: Bool)
     func get<T: Object>(_ type: T.Type, requestType: RequestType) -> Results<T>?

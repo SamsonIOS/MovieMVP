@@ -8,5 +8,4 @@ protocol NetworkServicable {
     func fetchActorData(actorsID: Int, completion: @escaping (Result<[Actor], Error>) -> ())
     func fetchDetailMovies(id: Int, completion: @escaping (Result<Movies, Error>) -> ())
     func fetchMovies(requestType: RequestType, completion: @escaping (Result<[Movies], Error>) -> Void)
-    func fetchImageData(_ url: String, _ completion: @escaping (Result<Data, Error>) -> Void)
 }
