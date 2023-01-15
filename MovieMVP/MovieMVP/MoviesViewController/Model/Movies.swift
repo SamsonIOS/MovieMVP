@@ -1,26 +1,30 @@
 // Movies.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import SwiftyJSON
 
 /// Модель для получении информации о фильмах
-struct Movies {
-    /// Название
-    let title: String?
-    /// Описание фильма
-    let overview: String?
-    /// Постер
-    let movieImage: String?
-    /// Рейтинг
-    let rating: Double?
+final class Movies: Object {
     /// Идентификатор
-    let id: Int?
+    @Persisted(primaryKey: true) var id: Int?
+    /// Название
+    @Persisted var title: String?
+    /// Описание фильма
+    @Persisted var overview: String?
+    /// Постер
+    @Persisted var movieImage: String?
+    /// Рейтинг
+    @Persisted var rating: Double?
     /// Постер фильма для второго экрана
-    let backdropImage: String?
+    @Persisted var backdropImage: String?
     /// Дата выхода
-    let date: String?
+    @Persisted var date: String?
+    /// Типы фильмов
+    @Persisted var requestType: String?
 
-    init(json: JSON) {
+    convenience init(json: JSON) {
+        self.init()
         title = json["title"].stringValue
         overview = json["overview"].stringValue
         movieImage = json["poster_path"].string
@@ -28,5 +32,6 @@ struct Movies {
         rating = json["vote_average"].doubleValue
         id = json["id"].intValue
         date = json["release_date"].stringValue
+        requestType = ""
     }
 }

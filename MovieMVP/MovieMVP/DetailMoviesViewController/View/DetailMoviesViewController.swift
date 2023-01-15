@@ -98,7 +98,12 @@ final class DetailMoviesViewController: UIViewController {
 
     // MARK: - Private properties
 
-    private var actor: [Actor] = []
+    private var actor: [Actor] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+
     private var movieId: Int?
 
     // MARK: - Life cycle
@@ -110,18 +115,26 @@ final class DetailMoviesViewController: UIViewController {
 
     // MARK: - Public Methods
 
-    func setUI(movie: Movies?, imageURL: String) {
+    func setUI(movie: Movies?, imageURL: String, imageService: ImageServicable) {
         dateLabel.text = movie?.date
         overviewLabel.text = movie?.overview
         movieId = movie?.id
         title = movie?.title
         let urlString = "\(NetworkAPI.imageURL)\(imageURL)"
-        guard let imageURL = URL(string: urlString) else { return }
-        movieImageView.image = nil
-        getImageData(url: imageURL)
+        fetchImage(imageService: imageService, urlString: urlString)
     }
 
     // MARK: - Private Methods
+
+    private func fetchImage(imageService: ImageServicable, urlString: String) {
+        imageService.photo(byUrl: urlString) { [weak self] result in
+            guard let result = result,
+                  let self = self else { return }
+            if let image = UIImage(data: result) {
+                self.movieImageView.image = image
+            }
+        }
+    }
 
     private func setView() {
         view.backgroundColor = .black
@@ -136,7 +149,6 @@ final class DetailMoviesViewController: UIViewController {
         collectionView.backgroundColor = .black
         setConstraints()
         fetchDetailMovies()
-        fetchActor()
     }
 
     private func setConstraints() {
@@ -189,35 +201,6 @@ final class DetailMoviesViewController: UIViewController {
     private func fetchDetailMovies() {
         presenter?.fetchDetailMovies()
     }
-
-    private func fetchActor() {
-        presenter?.fetchActor()
-    }
-
-    private func getImageData(url: URL) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                self.showAlert(title: Constants.dataTaskErrorText, message: error.localizedDescription, handler: nil)
-                return
-            }
-
-            guard response != nil else {
-                print(Constants.responseText)
-                return
-            }
-
-            guard let data = data else {
-                print(Constants.dontGetDataText)
-                return
-            }
-
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.movieImageView.image = image
-                }
-            }
-        }.resume()
-    }
 }
 
 // MARK: - UICollectionViewDataSource, UICollectionViewDelegate
@@ -231,14 +214,15 @@ extension DetailMoviesViewController: UICollectionViewDataSource, UICollectionVi
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(
-                withReuseIdentifier: Constants.collectionCellId,
-                for: indexPath
-            ) as? ActorCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: Constants.collectionCellId,
+            for: indexPath
+        ) as? ActorCollectionViewCell else { return UICollectionViewCell() }
+        guard let actor = presenter?.actors[indexPath.row],
+              let imageService = presenter?.imageService,
+              let actorImage = actor.actorImage
         else { return UICollectionViewCell() }
-        guard let actor = presenter?.actors[indexPath.row] else { return UICollectionViewCell() }
-        cell.setCellWithValues(actor: actor)
+        cell.setCellWithValues(actor: actor, imageURL: actorImage, imageService: imageService)
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
         return cell
@@ -256,7 +240,7 @@ extension DetailMoviesViewController: DetailMoviesViewable {
         showAlert(title: nil, message: error.localizedDescription, handler: nil)
     }
 
-    func setupUI(movieDetail: Movies?, imageURL: String) {
-        setUI(movie: movieDetail, imageURL: imageURL)
+    func setupUI(movieDetail: Movies?, imageURL: String, imageService: ImageServicable) {
+        setUI(movie: movieDetail, imageURL: imageURL, imageService: imageService)
     }
 }

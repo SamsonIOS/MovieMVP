@@ -7,5 +7,5 @@ import Foundation
 protocol DetailMoviesViewable: AnyObject {
     func succes()
     func failure(_ error: Error)
-    func setupUI(movieDetail: Movies?, imageURL: String)
+    func setupUI(movieDetail: Movies?, imageURL: String, imageService: ImageServicable)
 }

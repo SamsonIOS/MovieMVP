@@ -95,25 +95,35 @@ final class MovieTableViewCell: UITableViewCell {
 
     // MARK: Public Methods
 
-    func setCellWithValues(_ movie: Movies) {
+    func setCellWithValues(_ movie: Movies, imageService: ImageServicable) {
         nameFilmLabel.text = movie.title
 
         infoFilmLabel.text = movie.overview
 
         guard let rating = movie.rating else { return }
         ratingLabel.text = String(rating)
-
         guard let imageString = movie.movieImage else { return }
         let urlString = "\(NetworkAPI.imageURL)\(imageString)"
+        fetchImage(imageService: imageService, urlString: urlString)
+    }
 
-        guard let imageURL = URL(string: urlString) else {
-            return
-        }
-
-        getImageData(url: imageURL)
+    override func prepareForReuse() {
+        filmImageView.image = nil
+        infoFilmLabel.text = nil
+        ratingLabel.text = nil
     }
 
     // MARK: Private Methods
+
+    private func fetchImage(imageService: ImageServicable, urlString: String) {
+        imageService.photo(byUrl: urlString) { [weak self] result in
+            guard let result = result,
+                  let self = self else { return }
+            if let image = UIImage(data: result) {
+                self.filmImageView.image = image
+            }
+        }
+    }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -162,19 +172,5 @@ final class MovieTableViewCell: UITableViewCell {
         addSubview(infoFilmLabel)
         addSubview(ratingView)
         addSubview(ratingLabel)
-    }
-
-    private func getImageData(url: URL) {
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data = data else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.filmImageView.image = image
-                }
-            }
-        }.resume()
     }
 }

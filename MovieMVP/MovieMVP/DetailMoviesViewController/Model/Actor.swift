@@ -1,16 +1,20 @@
 // Actor.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import SwiftyJSON
 
 /// Модель для получения актеров и их имен
-struct Actor {
+final class Actor: Object {
     /// Имя Актера
-    let name: String?
+    @Persisted(primaryKey: true) var name: String
     /// Фото Актера
-    let actorImage: String?
+    @Persisted var actorImage: String?
+    /// Идентификатор фильма
+    @Persisted var id: Int
 
-    init(json: JSON) {
+    convenience init(json: JSON) {
+        self.init()
         name = json["name"].stringValue
         actorImage = json["profile_path"].string
     }

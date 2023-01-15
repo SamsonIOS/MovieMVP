@@ -4,6 +4,7 @@
 import Foundation
 import SwiftyJSON
 
+/// Сетевой сервис
 final class NetworkService: NetworkCoreService, NetworkServicable {
     // MARK: - Constants
 
@@ -37,8 +38,8 @@ final class NetworkService: NetworkCoreService, NetworkServicable {
         }
     }
 
-    func fetchMovies(page: Int, requestType: RequestType, completion: @escaping (Result<[Movies], Error>) -> Void) {
-        downloadJsonResult(page: page, requestType: requestType) { result in
+    func fetchMovies(requestType: RequestType, completion: @escaping (Result<[Movies], Error>) -> Void) {
+        downloadJsonResult(requestType: requestType) { result in
             switch result {
             case let .success(json):
                 let movies = json["results"].arrayValue.map { Movies(json: $0) }

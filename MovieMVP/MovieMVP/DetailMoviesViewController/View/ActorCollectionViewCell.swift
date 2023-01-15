@@ -57,15 +57,22 @@ final class ActorCollectionViewCell: UICollectionViewCell {
         fatalError(Constants.initErrorText)
     }
 
+    // MARK: Public Methods
+
+    override func prepareForReuse() {
+        actorPhotoImageView.image = nil
+        actorNameLabel.text = nil
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         setConstraints()
     }
 
-    // MARK: Public Methods
-
-    func setCellWithValues(actor: Actor) {
-        setUI(actorImage: actor.actorImage, actorName: actor.name)
+    func setCellWithValues(actor: Actor, imageURL: String, imageService: ImageServicable) {
+        actorNameLabel.text = actor.name
+        let urlString = "\(NetworkAPI.imageURL)\(imageURL)"
+        fetchActorsImage(imageService: imageService, urlString: urlString)
     }
 
     // MARK: Private Methods
@@ -80,42 +87,34 @@ final class ActorCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             actorNameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             actorNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: Constants.actorNameLabelTopAnchor),
-            actorNameLabel.bottomAnchor.constraint(equalTo: actorPhotoImageView.topAnchor, constant: Constants.actorNameLabelBottomAnchor),
+            actorNameLabel.bottomAnchor.constraint(
+                equalTo: actorPhotoImageView.topAnchor,
+                constant: Constants.actorNameLabelBottomAnchor
+            ),
 
-            actorPhotoImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.actorPhotoImageViewBottomAnchor),
-            actorPhotoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.actorPhotoImageViewLeadingAnchor),
-            actorPhotoImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.actorPhotoImageViewTrailingAnchor),
+            actorPhotoImageView.bottomAnchor.constraint(
+                equalTo: bottomAnchor,
+                constant: Constants.actorPhotoImageViewBottomAnchor
+            ),
+            actorPhotoImageView.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: Constants.actorPhotoImageViewLeadingAnchor
+            ),
+            actorPhotoImageView.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: Constants.actorPhotoImageViewTrailingAnchor
+            ),
             actorPhotoImageView.heightAnchor.constraint(equalToConstant: Constants.actorPhotoImageViewHeightAnchor),
         ])
     }
 
-    private func setUI(actorImage: String?, actorName: String?) {
-        actorNameLabel.text = actorName
-        guard let imageString = actorImage else { return }
-
-        let urlString = "\(NetworkAPI.imageURL)\(imageString)"
-
-        guard let imageURL = URL(string: urlString) else { return }
-        getImageData(url: imageURL)
-    }
-
-    private func getImageData(url: URL) {
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
-                print("\(Constants.dataTaskErrorText) - \(error.localizedDescription)")
-                return
+    private func fetchActorsImage(imageService: ImageServicable, urlString: String) {
+        imageService.photo(byUrl: urlString) { [weak self] result in
+            guard let result = result,
+                  let self = self else { return }
+            if let image = UIImage(data: result) {
+                self.actorPhotoImageView.image = image
             }
-
-            guard let data = data else {
-                print(Constants.dontGetDataText)
-                return
-            }
-
-            DispatchQueue.main.async {
-                if let image = UIImage(data: data) {
-                    self.actorPhotoImageView.image = image
-                }
-            }
-        }.resume()
+        }
     }
 }
