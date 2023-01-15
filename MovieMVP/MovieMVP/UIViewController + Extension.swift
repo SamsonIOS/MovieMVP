@@ -1,9 +1,5 @@
-//
-//  UIViewController + Extension.swift
-//  MovieMVP
-//
-//  Created by coder on 13.01.2023.
-//
+// UIViewController + Extension.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 

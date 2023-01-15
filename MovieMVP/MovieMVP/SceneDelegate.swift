@@ -11,6 +11,11 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // MARK: - Public Methods
 
+    func saveToKeychain() {
+        let keychainService = KeychainService()
+        keychainService.setAPI(value: NetworkAPI.token, forKey: NetworkAPI.keychainKey)
+    }
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
@@ -19,6 +24,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScence = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScence.coordinateSpace.bounds)
         window?.windowScene = windowScence
+        saveToKeychain()
         let navigationController = UINavigationController()
         let builder = Builder()
         let router = Router(navigationController: navigationController, builder: builder)

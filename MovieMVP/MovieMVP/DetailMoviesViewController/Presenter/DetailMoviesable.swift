@@ -7,7 +7,7 @@ import Foundation
 protocol DetailMoviesable {
     var detailMovies: Movies? { get set }
     var actors: [Actor] { get set }
-
+    var imageService: ImageServicable { get }
     func fetchDetailMovies()
     func fetchActor()
 }

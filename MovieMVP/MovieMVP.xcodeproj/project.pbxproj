@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		33100A2F297164A6004A6B32 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */; };
+		33100A44297328EA004A6B32 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A43297328EA004A6B32 /* RealmService.swift */; };
+		33100A46297328F2004A6B32 /* RealmServicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A45297328F2004A6B32 /* RealmServicable.swift */; };
+		33100A4929732928004A6B32 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A4829732928004A6B32 /* KeychainService.swift */; };
+		33100A4B29732933004A6B32 /* KeychainServicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A4A29732933004A6B32 /* KeychainServicable.swift */; };
+		33100A4E2973295A004A6B32 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 33100A4D2973295A004A6B32 /* Realm */; };
+		33100A502973295A004A6B32 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 33100A4F2973295A004A6B32 /* RealmSwift */; };
+		33100A5329732971004A6B32 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 33100A5229732971004A6B32 /* KeychainSwift */; };
+		33100A55297357AC004A6B32 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A54297357AC004A6B32 /* ImageService.swift */; };
+		33100A58297357CC004A6B32 /* ImageServicable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33100A57297357CC004A6B32 /* ImageServicable.swift */; };
 		332670BD2906C87C00EE3472 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332670BC2906C87C00EE3472 /* AppDelegate.swift */; };
 		332670BF2906C87C00EE3472 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332670BE2906C87C00EE3472 /* SceneDelegate.swift */; };
 		332670C42906C87C00EE3472 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 332670C22906C87C00EE3472 /* Main.storyboard */; };
@@ -41,6 +50,12 @@
 
 /* Begin PBXFileReference section */
 		33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		33100A43297328EA004A6B32 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		33100A45297328F2004A6B32 /* RealmServicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmServicable.swift; sourceTree = "<group>"; };
+		33100A4829732928004A6B32 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		33100A4A29732933004A6B32 /* KeychainServicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServicable.swift; sourceTree = "<group>"; };
+		33100A54297357AC004A6B32 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		33100A57297357CC004A6B32 /* ImageServicable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServicable.swift; sourceTree = "<group>"; };
 		332670B92906C87C00EE3472 /* MovieMVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieMVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		332670BC2906C87C00EE3472 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		332670BE2906C87C00EE3472 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33100A502973295A004A6B32 /* RealmSwift in Frameworks */,
+				33100A4E2973295A004A6B32 /* Realm in Frameworks */,
+				33100A5329732971004A6B32 /* KeychainSwift in Frameworks */,
 				33A0AEA32970BE21001BEB32 /* SwiftyJSON in Frameworks */,
 				33A0AEA62970BE45001BEB32 /* Alamofire in Frameworks */,
 			);
@@ -85,6 +103,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33100A42297328CE004A6B32 /* RealmService */ = {
+			isa = PBXGroup;
+			children = (
+				33100A43297328EA004A6B32 /* RealmService.swift */,
+				33100A45297328F2004A6B32 /* RealmServicable.swift */,
+			);
+			path = RealmService;
+			sourceTree = "<group>";
+		};
+		33100A47297328F7004A6B32 /* KeychainService */ = {
+			isa = PBXGroup;
+			children = (
+				33100A4829732928004A6B32 /* KeychainService.swift */,
+				33100A4A29732933004A6B32 /* KeychainServicable.swift */,
+			);
+			path = KeychainService;
+			sourceTree = "<group>";
+		};
+		33100A56297357B7004A6B32 /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				33100A54297357AC004A6B32 /* ImageService.swift */,
+				33100A57297357CC004A6B32 /* ImageServicable.swift */,
+			);
+			path = ImageService;
+			sourceTree = "<group>";
+		};
 		332670B02906C87C00EE3472 = {
 			isa = PBXGroup;
 			children = (
@@ -107,8 +152,11 @@
 				332670BC2906C87C00EE3472 /* AppDelegate.swift */,
 				332670BE2906C87C00EE3472 /* SceneDelegate.swift */,
 				33100A2E297164A6004A6B32 /* UIViewController + Extension.swift */,
-				33A0AE9A2970BD23001BEB32 /* Builder */,
+				33100A56297357B7004A6B32 /* ImageService */,
+				33100A47297328F7004A6B32 /* KeychainService */,
+				33100A42297328CE004A6B32 /* RealmService */,
 				33A0AE992970BD0E001BEB32 /* ServiceLayer */,
+				33A0AE9A2970BD23001BEB32 /* Builder */,
 				33A0AE712970B8A1001BEB32 /* Router */,
 				33A0AE782970B8E9001BEB32 /* NetworkAPI */,
 				33A0AE7D2970B9D8001BEB32 /* MoviesViewController */,
@@ -254,6 +302,9 @@
 			packageProductDependencies = (
 				33A0AEA22970BE21001BEB32 /* SwiftyJSON */,
 				33A0AEA52970BE45001BEB32 /* Alamofire */,
+				33100A4D2973295A004A6B32 /* Realm */,
+				33100A4F2973295A004A6B32 /* RealmSwift */,
+				33100A5229732971004A6B32 /* KeychainSwift */,
 			);
 			productName = MovieApp;
 			productReference = 332670B92906C87C00EE3472 /* MovieMVP.app */;
@@ -286,6 +337,8 @@
 			packageReferences = (
 				33A0AEA12970BE21001BEB32 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				33A0AEA42970BE45001BEB32 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				33100A4C2973295A004A6B32 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				33100A5129732971004A6B32 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 332670BA2906C87C00EE3472 /* Products */;
 			projectDirPath = "";
@@ -354,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33A0AE962970BCEE001BEB32 /* DetailMoviesPresenter.swift in Sources */,
+				33100A46297328F2004A6B32 /* RealmServicable.swift in Sources */,
 				332670BD2906C87C00EE3472 /* AppDelegate.swift in Sources */,
 				33A0AE942970BCD1001BEB32 /* DetailMoviesViewProtocol.swift in Sources */,
 				33A0AE772970B8C4001BEB32 /* Routerable.swift in Sources */,
@@ -362,6 +416,7 @@
 				33100A2F297164A6004A6B32 /* UIViewController + Extension.swift in Sources */,
 				33A0AE922970BC43001BEB32 /* Actor.swift in Sources */,
 				33A73F71290720F00089B6F2 /* MovieTableViewCell.swift in Sources */,
+				33100A44297328EA004A6B32 /* RealmService.swift in Sources */,
 				33A0AE9C2970BD43001BEB32 /* NetworkService.swift in Sources */,
 				33A0AE902970BBC1001BEB32 /* MoviesPresentable.swift in Sources */,
 				33A0AE7C2970B9C9001BEB32 /* RequestType.swift in Sources */,
@@ -369,13 +424,17 @@
 				33A0AE752970B8BB001BEB32 /* RouterMainProtocol.swift in Sources */,
 				33874BCE29092D740041BBAC /* DetailMoviesViewController.swift in Sources */,
 				33A0AE9E2970BD4C001BEB32 /* NetworkCoreService.swift in Sources */,
+				33100A58297357CC004A6B32 /* ImageServicable.swift in Sources */,
 				33A0AE8E2970BB11001BEB32 /* MoviesPresenter.swift in Sources */,
 				33A0AE8A2970BAA8001BEB32 /* MoviesViewController.swift in Sources */,
 				332670BF2906C87C00EE3472 /* SceneDelegate.swift in Sources */,
 				33A0AE882970BA79001BEB32 /* Movies.swift in Sources */,
 				33A0AE702970B891001BEB32 /* Builderable.swift in Sources */,
+				33100A55297357AC004A6B32 /* ImageService.swift in Sources */,
+				33100A4B29732933004A6B32 /* KeychainServicable.swift in Sources */,
 				33A0AE982970BCFE001BEB32 /* DetailMoviesable.swift in Sources */,
 				33A0AE732970B8B0001BEB32 /* Router.swift in Sources */,
+				33100A4929732928004A6B32 /* KeychainService.swift in Sources */,
 				33A0AE7A2970B904001BEB32 /* NetworkAPI.swift in Sources */,
 				33A0AEA02970BD68001BEB32 /* NetworkServicable.swift in Sources */,
 			);
@@ -595,6 +654,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		33100A4C2973295A004A6B32 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		33100A5129732971004A6B32 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		33A0AEA12970BE21001BEB32 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -614,6 +689,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		33100A4D2973295A004A6B32 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33100A4C2973295A004A6B32 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		33100A4F2973295A004A6B32 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33100A4C2973295A004A6B32 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		33100A5229732971004A6B32 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33100A5129732971004A6B32 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
 		33A0AEA22970BE21001BEB32 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0AEA12970BE21001BEB32 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

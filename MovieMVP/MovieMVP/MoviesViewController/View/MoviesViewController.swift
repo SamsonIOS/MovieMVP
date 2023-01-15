@@ -99,25 +99,10 @@ final class MoviesViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = ButtonsTitle.emptyText
     }
 
-    // MARK: Action Buttons
-
-    @objc private func clickAction(sender: UIButton) {
-        switch sender.tag {
-        case 0:
-            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.topRated)")
-        case 1:
-            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.popular)")
-        case 2:
-            switchMovies(urlMovies: "\(NetworkAPI.infoURL)\(RequestType.upcoming)")
-        default:
-            break
-        }
-    }
-
     // MARK: Private Methods
 
-    private func switchMovies(urlMovies: String) {
-        let url = urlMovies
+    @objc private func clickAction(sender: UIButton) {
+        presenter?.switchMovies(tag: sender.tag)
     }
 
     private func setView() {
@@ -133,7 +118,6 @@ final class MoviesViewController: UIViewController {
         tableView.backgroundColor = .black
         constraintsTableView()
         setButtons()
-        loadPopularMoviesData(requestType: .popular)
     }
 
     private func constraintsTableView() {
@@ -171,10 +155,6 @@ final class MoviesViewController: UIViewController {
         latestButton.heightAnchor.constraint(equalToConstant: ValueComponents.buttonHeigthAnchor).isActive = true
     }
 
-    private func loadPopularMoviesData(requestType: RequestType) {
-        presenter?.fetchMovies(requestType: requestType)
-    }
-
     private func goToDetailMoviesViewController(id: Int) {
         presenter?.selectMovie(id: id)
     }
@@ -194,7 +174,8 @@ extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
         ) as? MovieTableViewCell else { return UITableViewCell() }
 
         guard let movie = presenter?.cellForRowAt(indexPath: indexPath) else { return UITableViewCell() }
-        cell.setCellWithValues(movie)
+        guard let imageService = presenter?.imageService else { return UITableViewCell() }
+        cell.setCellWithValues(movie, imageService: imageService)
         cell.selectionStyle = .none
 
         return cell

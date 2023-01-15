@@ -18,6 +18,16 @@ class NetworkCoreService {
         static let hostText = "api.themoviedb.org"
     }
 
+    // MARK: - Private properties
+
+    private var keychainService: KeychainServicable
+
+    // MARK: - Initializers
+
+    init(keychainService: KeychainServicable) {
+        self.keychainService = keychainService
+    }
+
     // MARK: - Public methods
 
     func downloadJson(urlString: String, completion: @escaping (Result<JSON, Error>) -> Void) {
@@ -33,13 +43,12 @@ class NetworkCoreService {
     }
 
     func downloadJsonResult(
-        page: Int,
         requestType: RequestType,
         completion: @escaping (Result<JSON, Error>) -> Void
     ) {
-        var queryItems = [URLQueryItem(name: Constants.apiKeyText, value: NetworkAPI.token)]
+        var queryItems =
+            [URLQueryItem(name: Constants.apiKeyText, value: keychainService.getAPI(key: NetworkAPI.keychainKey))]
         queryItems.append(URLQueryItem(name: Constants.languageText, value: Constants.languageOfInfoAboutMovies))
-        queryItems.append(URLQueryItem(name: Constants.pageText, value: "\(page)"))
 
         var components = URLComponents()
         components.scheme = Constants.httpsText
