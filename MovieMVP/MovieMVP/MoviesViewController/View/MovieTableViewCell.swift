@@ -8,7 +8,6 @@ final class MovieTableViewCell: UITableViewCell {
     // MARK: Constants
 
     private enum Constants {
-        static let urlImage = "https://image.tmdb.org/t/p/w500"
         static let initErrorText = "init(coder:) has not been implemented"
         static let filmImageViewCornerRadius: CGFloat = 15
         static let nameFilmLabelSystemFont: CGFloat = 16
