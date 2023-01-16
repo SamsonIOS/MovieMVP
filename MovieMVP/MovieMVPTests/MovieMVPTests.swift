@@ -6,6 +6,10 @@ import XCTest
 
 /// Тесты приложения
 final class MoviesListTest: XCTestCase {
+    // MARK: - Constants
+    private enum Constants {
+        static let countMovies = 20
+    }
     // MARK: - Private Properties
 
     private var view: MockMovieView!
@@ -44,7 +48,7 @@ final class MoviesListTest: XCTestCase {
                 print(error.localizedDescription)
             }
         }
-        XCTAssertEqual(catchMovie.count, 20)
+        XCTAssertEqual(catchMovie.count, Constants.countMovies)
     }
 
     func testGetFailureMovies() {
