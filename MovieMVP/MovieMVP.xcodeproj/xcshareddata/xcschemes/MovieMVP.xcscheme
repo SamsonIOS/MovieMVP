@@ -26,8 +26,41 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "332670B82906C87C00EE3472"
+            BuildableName = "MovieMVP.app"
+            BlueprintName = "MovieMVP"
+            ReferencedContainer = "container:MovieMVP.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "33100A6C29749729004A6B32"
+               BuildableName = "MovieMVPTests.xctest"
+               BlueprintName = "MovieMVPTests"
+               ReferencedContainer = "container:MovieMVP.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "33100A792974973A004A6B32"
+               BuildableName = "MovieMVPUITests.xctest"
+               BlueprintName = "MovieMVPUITests"
+               ReferencedContainer = "container:MovieMVP.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

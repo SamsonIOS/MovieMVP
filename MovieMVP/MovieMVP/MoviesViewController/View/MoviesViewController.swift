@@ -17,6 +17,11 @@ final class MoviesViewController: UIViewController {
 
     private enum CellId {
         static let movieCellId = "movieCell"
+        static let firstButtonID = "firstButton"
+        static let secondButtonID = "secondButton"
+        static let thirdButtonID = "thirdButton"
+        static let moviesViewControllerID = "moviesViewController"
+        static let moviesCellTest = "moviesCellTest"
     }
 
     private enum ValueComponents {
@@ -49,6 +54,7 @@ final class MoviesViewController: UIViewController {
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
         button.tag = ValueComponents.popularButtonTag
+        button.accessibilityIdentifier = CellId.firstButtonID
         return button
     }()
 
@@ -62,6 +68,7 @@ final class MoviesViewController: UIViewController {
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
         button.tag = ValueComponents.topRatingButtonTag
+        button.accessibilityIdentifier = CellId.secondButtonID
         return button
     }()
 
@@ -75,6 +82,7 @@ final class MoviesViewController: UIViewController {
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(clickAction(sender:)), for: .touchUpInside)
         button.tag = ValueComponents.latestButtonTag
+        button.accessibilityIdentifier = CellId.thirdButtonID
         return button
     }()
 
@@ -118,6 +126,7 @@ final class MoviesViewController: UIViewController {
         tableView.backgroundColor = .black
         constraintsTableView()
         setButtons()
+        tableView.accessibilityIdentifier = CellId.moviesViewControllerID
     }
 
     private func constraintsTableView() {
@@ -176,6 +185,7 @@ extension MoviesViewController: UITableViewDelegate, UITableViewDataSource {
         guard let movie = presenter?.cellForRowAt(indexPath: indexPath) else { return UITableViewCell() }
         guard let imageService = presenter?.imageService else { return UITableViewCell() }
         cell.setCellWithValues(movie, imageService: imageService)
+        cell.accessibilityIdentifier = "\(CellId.moviesCellTest)\(indexPath.row)"
         cell.selectionStyle = .none
 
         return cell

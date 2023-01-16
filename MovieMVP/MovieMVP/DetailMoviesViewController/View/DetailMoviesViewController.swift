@@ -35,6 +35,8 @@ final class DetailMoviesViewController: UIViewController {
         static let collectionViewLeadingAnchor: CGFloat = 10
         static let collectionViewTrailingAnchor: CGFloat = -10
         static let collectionViewBottomAnchor: CGFloat = -10
+        static let detailMoviesID = "detailMovies"
+        static let detailMoviesCellID = "detailMoviesCell"
     }
 
     // MARK: - Private Visual Components
@@ -149,6 +151,7 @@ final class DetailMoviesViewController: UIViewController {
         collectionView.backgroundColor = .black
         setConstraints()
         fetchDetailMovies()
+        view.accessibilityIdentifier = Constants.detailMoviesID
     }
 
     private func setConstraints() {
@@ -224,6 +227,7 @@ extension DetailMoviesViewController: UICollectionViewDataSource, UICollectionVi
         else { return UICollectionViewCell() }
         cell.setCellWithValues(actor: actor, imageURL: actorImage, imageService: imageService)
         cell.layer.cornerRadius = 5
+        cell.accessibilityIdentifier = Constants.detailMoviesCellID
         cell.clipsToBounds = true
         return cell
     }
