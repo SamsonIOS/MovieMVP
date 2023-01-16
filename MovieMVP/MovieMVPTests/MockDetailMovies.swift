@@ -34,7 +34,7 @@ final class MockDetailMoviesTest: XCTestCase {
         realmService = RealmService()
     }
 
-    func testGetSuccessMovieInfo() {
+    func testGetSuccessDetailMovies() {
         networkService = MockNetworkService(movieInfo: movieInfo)
         let movieID = Constants.movieID
         view = MockDetailMoviesView()
@@ -51,7 +51,7 @@ final class MockDetailMoviesTest: XCTestCase {
         XCTAssertNotNil(catchMovieInfo)
     }
 
-    func testGetFailureMovieInfo() {
+    func testGetFailureDetailMovies() {
         view = MockDetailMoviesView()
         networkService = MockNetworkService(movieInfo: nil)
         var catchError: Error?

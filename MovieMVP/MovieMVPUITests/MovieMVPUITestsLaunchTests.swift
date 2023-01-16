@@ -3,6 +3,7 @@
 
 import XCTest
 
+///  Тесты по скриншотам
 final class MovieMVPUITestsLaunchTests: XCTestCase {
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

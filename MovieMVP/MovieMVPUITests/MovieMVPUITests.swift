@@ -3,6 +3,7 @@
 
 import XCTest
 
+/// UI тест приложения
 final class MovieMVPUITests: XCTestCase {
     // MARK: - Constants
 

@@ -43,7 +43,6 @@ final class MoviesListTest: XCTestCase {
             switch result {
             case let .success(movie):
                 catchMovie = movie
-                self.realmService.save(items: self.movie, update: true)
             case let .failure(error):
                 print(error.localizedDescription)
             }

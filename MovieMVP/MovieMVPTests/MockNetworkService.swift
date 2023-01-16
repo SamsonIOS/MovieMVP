@@ -5,7 +5,7 @@ import Foundation
 @testable import MovieMVP
 import SwiftyJSON
 
-/// Мок сервиса по запросу данных с API
+/// Мок нетворк сервиса
 final class MockNetworkService: NetworkServicable {
     // MARK: - Constants
 

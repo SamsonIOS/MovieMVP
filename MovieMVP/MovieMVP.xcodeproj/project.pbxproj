@@ -55,7 +55,6 @@
 		33AC97622974B2AB0079CE3C /* MockRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC97612974B2AB0079CE3C /* MockRouter.swift */; };
 		33AC97642974B41F0079CE3C /* MockDetailMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC97632974B41F0079CE3C /* MockDetailMoviesView.swift */; };
 		33AC97662974B4A50079CE3C /* MockDetailMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC97652974B4A50079CE3C /* MockDetailMovies.swift */; };
-		33AC976A2974CE0D0079CE3C /* MockRealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33AC97692974CE0D0079CE3C /* MockRealmService.swift */; };
 		33F12B642970AA7000201D2C /* ActorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F12B632970AA7000201D2C /* ActorCollectionViewCell.swift */; };
 		33F2F35A2974A299006982A0 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 33F2F3592974A299006982A0 /* SwiftyJSON */; };
 		33F2F35C2974A299006982A0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 33F2F35B2974A299006982A0 /* Alamofire */; };
@@ -131,7 +130,6 @@
 		33AC97612974B2AB0079CE3C /* MockRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRouter.swift; sourceTree = "<group>"; };
 		33AC97632974B41F0079CE3C /* MockDetailMoviesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailMoviesView.swift; sourceTree = "<group>"; };
 		33AC97652974B4A50079CE3C /* MockDetailMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDetailMovies.swift; sourceTree = "<group>"; };
-		33AC97692974CE0D0079CE3C /* MockRealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealmService.swift; sourceTree = "<group>"; };
 		33F12B632970AA7000201D2C /* ActorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorCollectionViewCell.swift; sourceTree = "<group>"; };
 		33F2F3632974A682006982A0 /* MockMovie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockMovie.json; sourceTree = "<group>"; };
 		33F2F3642974A683006982A0 /* MockMovieInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MockMovieInfo.json; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 				33100A86297498FD004A6B32 /* MockMoviesView.swift */,
 				33100A672974942D004A6B32 /* MockNetworkService.swift */,
 				33100A6F2974972A004A6B32 /* MovieMVPTests.swift */,
-				33AC97692974CE0D0079CE3C /* MockRealmService.swift */,
 				33AC97612974B2AB0079CE3C /* MockRouter.swift */,
 				33AC97632974B41F0079CE3C /* MockDetailMoviesView.swift */,
 				33AC97652974B4A50079CE3C /* MockDetailMovies.swift */,
@@ -586,7 +583,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				33AC97622974B2AB0079CE3C /* MockRouter.swift in Sources */,
-				33AC976A2974CE0D0079CE3C /* MockRealmService.swift in Sources */,
 				33AC97662974B4A50079CE3C /* MockDetailMovies.swift in Sources */,
 				33100A8529749749004A6B32 /* MockNetworkService.swift in Sources */,
 				33AC97602974B0830079CE3C /* ModuleBuilderTest.swift in Sources */,
