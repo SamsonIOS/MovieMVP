@@ -36,7 +36,6 @@ final class MoviesListTest: XCTestCase {
     func testGetSuccessMovies() {
         view = MockMovieView()
         networkService = MockNetworkService(movie: movie)
-        realmService = MockRealmService()
         var catchMovie: [Movies] = []
 
         networkService.fetchMovies(requestType: .popular) { result in
